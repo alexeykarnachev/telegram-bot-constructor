@@ -1,0 +1,5 @@
+SQLAlchemy
+python-telegram-bot==6.1.0
+PyYAML
+transitions
+blockchain
