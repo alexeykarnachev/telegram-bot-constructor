@@ -8,7 +8,7 @@ from beanie import init_beanie
 
 from tbc.chat_engine import ChatEngine
 from tbc.settings import settings
-from tbc.state import Chat, Message, User
+from tbc.types import Chat, Message, User
 
 
 class App:
@@ -121,7 +121,6 @@ class App:
         message = Message(
             tg_id=tg_message.id,
             tg_data=tg_message.to_dict(),
-            timestamp=int(tg_message.date.timestamp()),
             text=tg_message.text,
         )
 

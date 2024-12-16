@@ -8,7 +8,7 @@ from pydantic_settings import (
     YamlConfigSettingsSource,
 )
 
-from tbc.state import ChatEngineConfig
+from tbc.types import ChatEngineConfig
 
 
 class _Settings(BaseSettings):

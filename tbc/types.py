@@ -1,11 +1,13 @@
 from collections import deque
 from logging import getLogger
 from typing import Deque, Dict, Literal
+from zoneinfo import ZoneInfo
 
 from beanie import Document, after_event, before_event
 from beanie.odm.actions import EventTypes
-from pydantic import BaseModel, Field, PrivateAttr
+from pydantic import BaseModel, Field, PrivateAttr, field_validator, validator
 from pymongo import ASCENDING, IndexModel
+from pytz import all_timezones
 
 logger = getLogger(__name__)
 
@@ -32,8 +34,6 @@ class BaseDocument(Document):
 class Message(BaseModel):
     tg_id: int
     tg_data: Dict
-
-    timestamp: int
 
     text: str | None = None
     _caption: str | None = PrivateAttr(default=None)
@@ -64,7 +64,8 @@ ChatEngineName = Literal["example_01"]
 
 
 class ChatEngineConfig(BaseModel):
-    new_message_processing_delay: float
+    new_message_processing_delay: float | None = None
+    timezone: str | None = None
 
 
 class Chat(BaseDocument):
