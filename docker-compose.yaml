@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  tbc-mongodb:
+    container_name: dev-tbc-mongodb
+    image: mongo:7
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_DATABASE: tbc-db
+      MONGO_INITDB_ROOT_USERNAME: tbc
+      MONGO_INITDB_ROOT_PASSWORD: tbc
+    volumes:
+      - tbc-mongodb:/data/db
+
+volumes:
+  tbc-mongodb:
+

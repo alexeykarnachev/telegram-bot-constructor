@@ -1,5 +1,7 @@
-SQLAlchemy
-python-telegram-bot==6.1.0
-PyYAML
-transitions
-blockchain
+beanie==1.27.0
+pillow==11.0.0
+pydantic==2.10.2
+pydantic_settings==2.6.1
+pydantic-settings[yaml]==2.6.1
+python-dotenv==1.0.1
+python-telegram-bot==21.7

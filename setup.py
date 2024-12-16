@@ -1,20 +1,38 @@
-from setuptools import setup, find_packages
+import pathlib
+import re
 
-with open('requirements.txt') as f:
-    required = f.read().splitlines()
+from setuptools import find_packages, setup
+
+_PACKAGE_NAME = "tbc"
+_THIS_DIR = pathlib.Path(__file__).parent
+
+
+def _get_version():
+    init_file = _THIS_DIR / _PACKAGE_NAME / "__init__.py"
+    with init_file.open("r") as f:
+        content = f.read()
+
+    version_pattern = re.compile(
+        r'^__version__\s*=\s*[\'"]([^\'"]*)[\'"]', flags=re.MULTILINE
+    )
+    version_match = version_pattern.search(content)
+
+    if not version_match:
+        raise RuntimeError("Unable to find version string")
+
+    return version_match.group(1)
+
+
+def _get_requirements():
+    with (_THIS_DIR / "requirements.txt").open() as fp:
+        return fp.read()
+
 
 setup(
-    name='tbc',
-    version='0.1.6',
-    packages=find_packages('src'),
-    package_dir={'': 'src'},
-    test_suite='tbc',
-    url='https://github.com/alexeykarnachev/telegram-bot-constructor',
-    author='Alexey Karnachev',
-    author_email='alekseykarnachev@gmail.com',
-    zip_safe=True,
-    install_requires=required
+    name=_PACKAGE_NAME,
+    version=_get_version(),
+    install_requires=_get_requirements(),
+    package_dir={_PACKAGE_NAME: _PACKAGE_NAME},
+    packages=find_packages(exclude=["tests", "tests.*"]),
+    include_package_data=True,
 )
-
-if __name__ == '__main__':
-    pass
